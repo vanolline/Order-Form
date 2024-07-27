@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Computer Component Order Form</title>
+    <!--Adding Bootstrap-->
+    <link  rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"> 
+    <!--Adding font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!--The CSS code goes here-->
+<style>
+
+  body{
+    background-color: #e7e7e2;
+    font-family: "Roboto Condensed", sans-serif; /*Using the font I added*/
+  }
+  .container{
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(46, 46, 46);
+    position: relative;
+  }
+  .title{
+    background-color: #AAD9BB;
+    color: #2F3645;
+    text-align: center;
+    margin-top: 40px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 100px;
+    border: 2px solid #80BCBD;
+  }
+  .dropdown{
+    border: 2px solid #80BCBD;
+    border-radius: 5px;
+  }
+  .components{
+    background-color: #AAD9BB;
+    color:#2F3645;
+    font-size: larger;
+    font-weight: bold;
+    border-radius: 5px;
+    border:2px solid #80BCBD;
+    margin: 10px;
+  }
+  .componentDetails{
+    display: none;
+  }
+  .cancelButton{
+    margin-top: 10px;
+  border-radius: 5px;
+  border: 2px solid rgb(89, 16, 16);
+  background-color:firebrick;
+  color: #EBF4F6;
+  font-weight: bold;
+  }
+  label{
+    color: #2F3645;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  input{
+    border-radius: 5px;
+    border: 2px solid #80BCBD;
+  }
+  #submitButton{
+    margin: 10px;
+    background-color:#80BCBD;
+    color: white;
+    font-weight:bold;
+    font-size: larger;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 3px solid #72a9aa;
+    border-radius: 5px;
+  }
+
+  /*Text area for address*/
+  #addressBox{
+   resize: none;
+   width: 100%;
+   width: 450px;
+   box-sizing: border-box;
+   height: 100px;
+   padding: 10px;
+   border-radius: 5px;
+   border: 2px solid #80BCBD;
+  }
+  /*Adjusting the address box in order to be responsive*/
+  @media(max-width:420px) {
+    #addressBox{
+       width: 250px;
+   }
+  }
+</style>
+</head>
+<!--All HTML and Javascript code goes here -->
+<body>
+    <!--This div is the main container-->
+    <div class="container mt-5">
+        <!--This text is placed at the top-->
+        <div class="title">
+            <h1 style="font-size: 40px;">ORDER FORM</h1>
+            <h1 style="font-size: 35px;">FOR COMPUTER COMPONENTS</h1>
+        </div> 
+        <br>
+        <!--Creating a div related to customer information-->
+        <form id="allform" onsubmit="return submitForm()"> 
+        <div class="cInfo">
+               <h3>CUSTOMER INFORMATION</h3> 
+                 <!--Customer first name-->
+                <label for="fname">First Name:</label> <br>
+                <input type="text" id="fname" name="firstname" placeholder="Enter your first name" required> <br>
+                 <!--Customer last name-->
+                <label for="lname">Last Name:</label> <br>
+                <input type="text" id="lname" name="lastname" placeholder="Enter your last name" required> <br>
+                 <!--Customer email address-->
+                <label for="email">Email Address:</label> <br>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required> <br>
+                 <!--Customer phone number-->
+                <label for="tel">Phone Number:</label> <br>
+                <input type="tel" id="tel" name="phoneNumber" pattern="[0-9]+" title="Please enter a valid phone number" placeholder="Enter your phone number" required> <br>
+               <br>
+        </div>
+        <hr>
+
+        <!--Creating another div for customer address-->
+      <div class="cAddress">
+         <h3>CUSTOMER ADDRESS</h3> 
+            <!--Dropdown menu for selecting the continent-->
+            <label for="continent">Select Continent:</label>
+            <!--Adding function to only show the countries related to each continent afterwards-->
+            <select class="dropdown" id="continent" name="continent" onchange="CountryName()" required>
+                <option value="">Tap to Select</option>
+                <option value="Africa">Africa</option>
+                <option value="America">America</option>
+                <option value="Asia">Asia</option>
+                <option value="Oceania">Oceania</option>
+                <option value="Europe">Europe</option>
+            </select>
+            <br> 
+
+            <!--Dropdown menu for selecting the country-->
+            <label for="country">Select Country:</label> 
+             <select class="dropdown" id="country" name="country" required>
+                <option value="" selected>Tap to Select</option> 
+             </select> 
+             <br>
+            <!--Creating a text area for details related to address--> 
+            <label for="address">Address:</label> <br>
+            <textarea id="addressBox" name="address" rows="3" style="line-height: 20px;" 
+            placeholder="Please Write Your Full Address and Zip-Code Here..."></textarea> 
+       </div> 
+     <br>
+     <hr>
+
+     <!--Crating a div for computer components-->
+     <div class="orderComponents">
+         <h3>Order Components</h3>
+         <h4>(Click The Items You Want to Order)</h4>
+         <!--Button for ordering CPU that includes some details when clicking on it-->
+         <fieldset>
+         <button type="button" class="components" onclick="showDetails('cpuDetails')"><legend>CPU</legend></button> <br>
+         <div class="componentDetails" id="cpuDetails">
+             <label for="cpuModel">Select Model:</label>
+             <select class="dropdown" id="cpuModel" name="cpuModel">
+               <option value="">Tap to Select</option>
+               <option value="Intel">Intel Core i9-13900K</option>
+               <option value="Intel">Intel Core i7-13700K</option>
+               <option value="Intel">Intel Core i5-13600K</option>
+               <option value="AMD">AMD Ryzen 9 7950X</option>
+               <option value="AMD">AMD Ryzen 7 7700X</option>
+               <option value="AMD">AMD Ryzen 5 7600X</option>
+             </select> <br>
+             <label for="cpuQuantity">Quantity:</label>
+             <input type="number" id="cpuQuantity" name="cpuQuantity" min="1" max="10" value=""> <br>
+             <!--Button for cancelling and reseting CPU model and quantity-->
+             <button type="button" class="cancelButton" onclick="cancelOrder('cpuDetails')"> CANCEL</button> <hr>
+          </div>
+        </fieldset>
+  
+          <!--Button for ordering GPU that includes some details when clicking on it-->
+          <fieldset>
+         <button type="button" class="components" onclick="showDetails('gpuDetails')"><legend>GPU</legend></button> <br>
+         <div class="componentDetails" id="gpuDetails">
+             <label for="gpuModel">Select Model:</label>
+             <select class="dropdown" id="gpuModel" name="gpuModel">
+               <option value="">Tap to Select</option>
+                <option value="NVIDIA">NVIDIA GeForce RTX 4090</option>
+                <option value="NVIDIA">NVIDIA GeForce RTX 4080</option>
+                <option value="NVIDIA">NVIDIA GeForce RTX 4070 Ti</option>
+                <option value="AMD">AMD Radeon RX 7900 XTX</option>
+                <option value="AMD">AMD Radeon RX 7900 XT</option>
+                <option value="AMD">AMD Radeon RX 7800 XT</option>
+              </select> <br>
+              <label for="gpuQuantity">Quantity:</label>
+              <input type="number" id="gpuQuantity" name="gpuQuantity" min="1" max="10" value=""> <br>
+              <!--Button for cancelling and reseting GPU model and quantity-->
+              <button type="button" class="cancelButton" onclick="cancelOrder('gpuDetails')">CANCEL</button> <hr>
+          </div>
+        </fieldset>
+  
+           <!--Button for ordering RAM that includes some details when clicking on it-->
+           <fieldset>
+          <button type="button" class="components" onclick="showDetails('ramDetails')"><legend>RAM</legend></button> <br>
+          <div class="componentDetails" id="ramDetails">
+             <label for="ramModel">Select Model:</label>
+             <select class="dropdown" id="ramModel" name="ramModel">
+               <option value="">Tap to Select</option>
+               <option value="Corsair">Corsair Vengeance LPX DDR4</option>
+               <option value="Corsair">Corsair Dominator Platinum RGB DDR4</option>
+               <option value="Gskill">G.Skill Trident Z RGB DDR4</option>
+               <option value="Crucial">Crucial Ballistics Sport LT DDR4</option>
+               <option value="Kingston">Kingston HyperX Fury DDR4</option>
+             </select> <br>
+             <label for="ramQuantity">Quantity:</label>
+             <input type="number" id="ramQuantity" name="ramQuantity" min="1" max="10" value=""> <br>
+             <!--Button for cancelling and reseting RAM model and quantity-->
+             <button type="button" class="cancelButton" onclick="cancelOrder('ramDetails')"> CANCEL</button> <hr>
+          </div>
+        </fieldset>
+  
+          <!--Button for ordering motherboard that includes some details when clicking on it-->
+          <fieldset>
+          <button type="button" class="components" onclick="showDetails('moDetails')"><legend>Motherboard</legend></button> <br>
+          <div class="componentDetails" id="moDetails">
+             <label for="moModel">Select Model:</label>
+             <select class="dropdown" id="moModel" name="moModel">
+               <option value="">Tap to Select</option>
+               <option value="ASUS">ASUS ROG Strix Z790-E Gaming</option>
+               <option value="MSI">MSI MPG Z790 Carbon WiFi</option>
+               <option value="Gigabyte">Gigabyte AORUS X670E Master</option>
+               <option value="ASRock">ASRock X670E Taichi</option>
+               <option value="ASUS">ASUS TUF Gaming B760M-PLUS WiFi D4</option>
+               <option value="MSI">MSI MAG B760 Tomahawk WiFi</option>
+             </select> <br>
+             <label for="moQuantity">Quantity:</label>
+             <input type="number" id="moQuantity" name="moQuantity" min="1" max="10" value=""> <br>
+             <!--Button for cancelling and reseting motherboard model and quantity-->
+             <button type="button" class="cancelButton" onclick="cancelOrder('moDetails')"> CANCEL</button> 
+            </div>
+          </fieldset>
+          <hr>
+  
+             <!--Finally the submit button!=]-->
+          <button type="submit" id="submitButton">SUBMIT</button>
+          </form>
+       </div>
+    </div> 
+    <!--End of the HTML code-->
+    
+    <!--All javascript code and functions go here-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+      //Giving country options based on the selected continent 
+        function CountryName() {
+        const continentSelect = document.getElementById('continent').value;
+        const countrySelect = document.getElementById('country');
+        const countries = {
+            "Africa": ["Kenya", "Egypt", "Ghana"],
+            "Asia": ["China", "Russia", "Turkey"],
+            "Europe": ["Spain", "Germany", "Italy"],
+            "America": ["Canada", "Argentina", "United States"],
+            "Oceania": ["Australia", "New Zealand", "Indonesia"]
+        };
+        const countryOptions = countries[continentSelect] || [];
+
+        //clearing the existing options
+        countrySelect.innerHTML = '<option value="" selected> Tap to Select </option>';
+        countryOptions.forEach(country => {
+            const option = document.createElement("option");
+            option.value = country;
+            option.text = country;
+            countrySelect.add(option);
+        }); 
+     }
+
+     //Making each component's details appear
+    function showDetails(id){
+        const details = document.getElementById(id);
+        if(details.style.display === 'block'){
+            details.style.display = 'none'
+        } 
+        else{
+            details.style.display = 'block'
+        }
+    }
+
+    //Closes the details of the component and resets 
+    function cancelOrder(id){
+       const details = document.getElementById(id)
+       details.querySelectorAll('select, input').forEach(elem => elem.value='');
+
+       details.style.display = 'none';
+    }
+
+    //Submits the order if all required fields are filled
+      function submitForm() {
+    var form = document.getElementById('allform');
+    var componentInfo = [
+        { model: 'cpuModel', quantity: 'cpuQuantity' },
+        { model: 'gpuModel', quantity: 'gpuQuantity' },
+        { model: 'ramModel', quantity: 'ramQuantity' },
+        { model: 'moModel', quantity: 'moQuantity' }
+    ];
+    //Checks if at least both the model and the quantity are determined for a component
+    var completeInfo = componentInfo.some(function(group) {
+        var model = document.getElementById(group.model).value;
+        var quantity = document.getElementById(group.quantity).value;
+        return model && quantity;
+    });
+    if (!completeInfo) {
+      //The pop-up will contain this message if the user hasn't chosen any components and wants to submit an empty form
+        alert("Please fill out both the model and quantity for at least one component");
+        return false;
+    }
+
+    /*If all required fields are filled and the user has chosen at least one component, 
+    the order can be submitted now, and the pop-up will contain this message*/
+    alert("Your order is successfully submitted!");
+    return true;
+  }
+
+    </script>
+
+</body>
+</html>
